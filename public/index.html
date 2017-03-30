@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Bootstrap 101 Template</title>
+    <!-- Bootstrap -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!--Custom style-->
+    <link href=style.css rel="stylesheet">
+    <!--Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Lekton|Orbitron" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <div class="container">
+        <div class="col-lg-4 col-lg-offset-4 customContainer" id="customContainer">
+            <div id="error-container"></div>
+            <h1 class="mainTitle">PICTOCHAT</h1>
+            <h1 class="nowEntering" id="nowEntering">Now entering:</h1>
+            <div class="messageBox">
+                <ul id="messages"></ul>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="col-lg-4 col-lg-offset-4 nopadding">
+            <form action="">
+                <input class="mainInputBox" type="text" id="m" autocomplete="off" />
+                <input type="submit" value="Submit"> </form>
+        </div>
+        <!--Modal-->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content customModal">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">PICTOCHAT</h4> </div>
+                    <div class="modal-body">
+                        <input class="form-control" id="name" type="text" name="name" autocomplete="off" value="" placeholder="Username"> </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" name="button" onclick="setUsername()" data-dismiss="modal">Enter Pictochat</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+    </div>
+</body>
+<!--jquery-->
+<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+<!--Socket io -->
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    var socket = io.connect();
+</script>
+<script>
+    //Calls the modal to display onload
+    $(window).load(function () {
+        $('#myModal').modal('show');
+    });
+    //takes the username entered and emits setUsername
+    function setUsername() {
+        socket.emit('setUsername', document.getElementById('name').value);
+    };
+    //holds current user
+    var user;
+    $(function () {
+//        var socket = io();
+        socket.on('userExists', function (data) {
+            document.getElementById('error-container').innerHTML = data;
+        });
+        //sets the username
+        socket.on('userSet', function (data) {
+            user = data.username;
+            console.log("user set")
+                //            alert("username set to: " + user);
+            document.getElementById("nowEntering").innerHTML = 'Now entering: ' + user;
+        });
+        //sends message with whatevers in form
+        $('form').submit(function () {
+            socket.emit('chat message', $('#m').val(), user);
+            $('#m').val('');
+            return false;
+        });
+        //puts message on the screen
+        socket.on('chat message', function (msg, user) {
+            //$('#messages').append($('<li>').text('<span>' + user + '</span>' + msg));
+            document.getElementById("messages").innerHTML += '<li>' + '<span class="usernameStyle">' + user + '</span>' + msg + '</li>';
+        });
+    });
+</script>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+
+</html>

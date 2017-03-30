@@ -1,0 +1,89 @@
+body{
+    background-color: #676767;
+}
+.nopadding{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+ul{
+    padding-left: 0px;
+}
+li{
+    background-color: white;
+    list-style-type: none;
+    font-family: 'Lekton', sans-serif;
+    font-weight: bold;
+    min-height: 60px;
+    border: 2px solid #7272c5;
+    border-radius: 7px;
+}
+/*
+form{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+*/
+.mainInputBox{
+    width: 100%;
+    height: 72px;
+    border: 2px solid #7272c5;
+    border-radius: 6px;
+/*    margin-top: -15px;*/
+}
+.customModal{
+    background-color: #afafaf;
+}
+.customModal h4{
+    font-family: 'Orbitron', sans-serif;
+}
+.customModal input{
+    font-family: 'Lekton', sans-serif;
+}
+.usernameStyle{
+    background-color: #b7b7f0;
+    border: 1px solid #7272c5;
+    border-radius: 4px;
+    padding-right: 30px;
+    padding-left: 5px;
+    margin-right: 4px;
+    font-size: 12px;
+}
+.customContainer {
+    background-image: url("Capture.PNG");
+    background-repeat: repeat;
+    border-radius: 2px;
+    margin-top: 25px;
+    height: 400px;
+    padding: 1px;
+    padding-top: 0px;
+    overflow:auto;
+    overflow-x: hidden;
+}
+
+.mainTitle {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 15px;
+    background-color: grey;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    border: 2px solid #bfbfbf;
+    margin: 0px;
+    margin-top: 7px;
+}
+
+.nowEntering {
+    font-size: 14px;
+    color: yellow;
+    background-color: black;
+    padding: 6px;
+    margin: 0px;
+    border: 2px solid #bfbfbf;
+    border-radius: 6px;
+    font-family: 'Lekton', sans-serif;
+}
+.messageBox{
+    overflow: auto;
+    overflow-x: hidden;
+}
